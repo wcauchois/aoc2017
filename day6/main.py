@@ -15,15 +15,18 @@ def step(banks):
     cur_idx = (cur_idx + 1) % len(new_banks)
   return new_banks
 
-banks = list(map(int, readsplits('input.txt')[0]))
+#banks = [0, 2, 7, 0]
+banks = readsplits('input.txt', int)[0]
 cur_banks = banks
-seen_states = [banks]
+seen_states = [(banks, 0)]
 i = 0
 while True:
   cur_banks = step(cur_banks)
   i += 1
-  if cur_banks in seen_states:
+  seen_items = [(b, i) for (b, i) in seen_states if b == cur_banks]
+  if len(seen_items) > 0:
+    #print(i) # answer to part 1
+    print(i - seen_items[0][1]) # answer to part 2
     break
-  seen_states.append(cur_banks)
-print(i)
+  seen_states.append((cur_banks, i))
 
